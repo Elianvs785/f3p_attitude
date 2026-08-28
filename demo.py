@@ -5,6 +5,8 @@
 Si le paquet f3p_attitude du superviseur est importable, chaque figure est en
 plus validee par SON solveur (poussee, angle d'attaque, convergence).
 """
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import numpy as np
 from compose import initial_state, sequence, mix, check_continuity, to_solver_input
 

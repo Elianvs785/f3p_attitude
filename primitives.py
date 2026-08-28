@@ -84,11 +84,19 @@ def turn(state, duration, delta_chi_deg, dt=0.02, speed=None):
     return _make(t, g, gd, c, cd, s, sd, m, md)
 
 
-def climb(state, duration, delta_gamma_deg, dt=0.02, speed=None):
+def climb(state, duration, delta_gamma_deg, dt=0.02, speed=None,
+          gamma_limit_deg=90.0):
     """MONTEE / DESCENTE : la pente change (delta=+90 -> vertical, comme son
-    scenario_level_to_vertical)."""
+    scenario_level_to_vertical).
+
+    gamma est BORNE a +/-90 deg : au-dela le parametrage (gamma, chi) n'a plus de
+    sens physique (l'avion "passe derriere" la verticale). Sans cette borne, deux
+    montees enchainees donnaient gamma=180 deg et des figures aberrantes.
+    """
     t = np.arange(0.0, duration + dt*0.5, dt)
-    g, gd = _ramp(t, duration, state["gamma"], state["gamma"] + np.deg2rad(delta_gamma_deg))
+    lim = np.deg2rad(gamma_limit_deg)
+    target = np.clip(state["gamma"] + np.deg2rad(delta_gamma_deg), -lim, lim)
+    g, gd = _ramp(t, duration, state["gamma"], target)
     c, cd = _hold(t, state["chi"]); m, md = _hold(t, state["mu"])
     if speed is None: s, sd = _hold(t, state["speed"])
     else:             s, sd = _ramp(t, duration, state["speed"], speed)
