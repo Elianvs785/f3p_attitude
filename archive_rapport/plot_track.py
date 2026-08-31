@@ -17,7 +17,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from track_env import TrackEnv, reference_from_weights
+from track_blend_env import TrackEnv, reference_from_weights
 from blend import PRIMS, N_PRIMS, weights_over_time
 
 COL = {"straight":"#4A4A4A","turn_right":"#00A79F","turn_left":"#7FD8D2",

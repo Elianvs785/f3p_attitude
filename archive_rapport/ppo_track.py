@@ -17,7 +17,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from track_env import TrackEnv, reference_from_weights
+from track_blend_env import TrackEnv, reference_from_weights
 from blend import PRIMS, N_PRIMS
 
 
